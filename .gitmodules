@@ -1,0 +1,7 @@
+[submodule "demo"]
+	path = demo
+	url = https://github.com/thanhh2310/DATN.git
+[submodule "ai-chatbot-service"]
+	path = ai-chatbot-service
+	url = https://github.com/thanhh2310/ai-chatbot-service.git
+	branch = dev

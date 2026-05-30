@@ -1,0 +1,75 @@
+services:
+  # 1. Cơ sở dữ liệu PostgreSQL (Tích hợp pgvector cho AI)
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: datn-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: datn
+      POSTGRES_USER: vutienthanh
+      # Sử dụng trust để cho phép không dùng mật khẩu, khớp với cấu hình hiện tại của bạn
+      POSTGRES_HOST_AUTH_METHOD: trust 
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - datn-network
+
+  # 2. Redis (Dùng cho Session và Cache)
+  redis:
+    image: redis:7-alpine
+    container_name: datn-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - datn-network
+
+  # 3. Backend Spring Boot (Nghiệp vụ cốt lõi)
+  spring-backend:
+    image: spring-backend # Thay bằng tên image bạn đã build, VD: datn-spring-image
+    container_name: datn-spring
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # Ghi đè host.docker.internal bằng tên container nội bộ
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/datn
+      - SPRING_DATA_REDIS_HOST=redis
+    env_file:
+      - ./demo/.env # Nạp các biến bảo mật từ file .env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - datn-network
+
+  # 4. Backend Flask (AI Chatbot)
+  flask-ai:
+    image: flask-ai # Thay bằng tên image bạn đã build, VD: datn-flask-image
+    container_name: datn-flask
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      # Ghi đè host.docker.internal bằng tên container nội bộ
+      - DATABASE_URL=postgresql://vutienthanh:@postgres:5432/datn
+      - FLASK_PORT=5001
+      - FLASK_ENV=development
+    env_file:
+      - ./ai-chatbot-service/.env # Nạp các biến bảo mật từ file .env
+    depends_on:
+      - postgres
+    networks:
+      - datn-network
+
+networks:
+  datn-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  redisdata:
