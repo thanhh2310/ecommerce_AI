@@ -1,0 +1,25 @@
+name: Tự động Deploy Backend
+
+# Kích hoạt kịch bản khi có người push code lên nhánh "main"
+on:
+  push:
+    branches: [ "main" ] 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kết nối vào Server và thực thi lệnh
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # 5 lệnh thần thánh sẽ được gõ tự động tại đây
+            cd ~/ecommerce_AI
+            git pull
+            git submodule update --remote --recursive
+            sudo docker compose build
+            sudo docker compose up -d
+            sudo docker image prune -f

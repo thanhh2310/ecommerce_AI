@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tổng hợp kiến thức dự án DATN</title>
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --paper: #ffffff;
+      --ink: #162033;
+      --muted: #5a6475;
+      --line: #d9deea;
+      --blue: #205c9f;
+      --green: #17725d;
+      --red: #a83b3b;
+      --amber: #946200;
+      --code: #eef2f7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+    }
+
+    header {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    h1, h2, h3, h4 { line-height: 1.25; margin: 0 0 12px; }
+    h1 { font-size: 32px; color: #0f2742; }
+    h2 {
+      margin-top: 30px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--line);
+      color: #14385f;
+      font-size: 24px;
+    }
+    h3 { margin-top: 22px; color: #1c4e83; font-size: 19px; }
+    h4 { margin-top: 16px; color: #25435f; font-size: 16px; }
+    p { margin: 8px 0 12px; }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 900px;
+      margin-top: 10px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--line);
+      background: #f9fbfd;
+      color: #2a3b52;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    nav, section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px 26px;
+      margin: 18px 0;
+    }
+
+    nav ul {
+      columns: 2;
+      padding-left: 20px;
+      margin: 8px 0 0;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 18px;
+      font-size: 15px;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 9px 10px;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    th {
+      background: #edf3fa;
+      color: #17395c;
+    }
+
+    code, pre {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+
+    code {
+      background: var(--code);
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    pre {
+      background: #111827;
+      color: #e5e7eb;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 12px 0;
+    }
+
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fbfcfe;
+    }
+
+    .box h4 { margin-top: 0; }
+    .good { color: var(--green); font-weight: 700; }
+    .warn { color: var(--amber); font-weight: 700; }
+    .risk { color: var(--red); font-weight: 700; }
+    .muted { color: var(--muted); }
+
+    .flow {
+      background: #f6f9fc;
+      border: 1px dashed #b9c5d6;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 12px 0;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+      white-space: pre-wrap;
+    }
+
+    .formula {
+      background: #fff8e8;
+      border-left: 4px solid #c98a00;
+      padding: 12px 14px;
+      margin: 12px 0;
+      border-radius: 6px;
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+
+    .question {
+      border-left: 4px solid var(--blue);
+      background: #f4f8fd;
+      padding: 12px 14px;
+      margin: 12px 0;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 820px) {
+      nav ul { columns: 1; }
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 26px; }
+      section, nav, header { padding: 18px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { max-width: none; padding: 0; }
+      header, nav, section { break-inside: avoid; border-color: #ccc; }
+      a { color: #000; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Tổng hợp kiến thức dự án DATN</h1>
+      <p class="subtitle">
+        Tài liệu này được viết dựa trên cấu trúc thực tế của hai folder
+        <code>demo</code> và <code>ai-chatbot-service</code>. Mục tiêu là giúp nắm kiến trúc,
+        công nghệ, mô hình dữ liệu, thuật toán và luồng nghiệp vụ để trình bày khi bảo vệ đồ án tốt nghiệp.
+      </p>
+      <div class="meta">
+        <span class="pill">Module Java: Spring Boot + PostgreSQL + Redis</span>
+        <span class="pill">Module AI: Flask + Together AI + pgvector</span>
+        <span class="pill">Domain: thương mại điện tử đồ thể thao</span>
+        <span class="pill">Ngày tổng hợp: 03/06/2026</span>
+      </div>
+    </header>
+
+    <nav>
+      <h2>Mục lục</h2>
+      <ul>
+        <li><a href="#overview">1. Tổng quan kiến trúc</a></li>
+        <li><a href="#demo">2. Folder demo - Spring Boot backend</a></li>
+        <li><a href="#demo-model">3. Mô hình dữ liệu trong demo</a></li>
+        <li><a href="#demo-algorithms">4. Thuật toán và nghiệp vụ trong demo</a></li>
+        <li><a href="#ai">5. Folder ai-chatbot-service</a></li>
+        <li><a href="#ai-algorithms">6. Thuật toán AI, RAG, recommendation</a></li>
+        <li><a href="#integration">7. Luồng tích hợp giữa hai service</a></li>
+        <li><a href="#defense">8. Gợi ý trả lời bảo vệ</a></li>
+      </ul>
+    </nav>
+
+    <section id="overview">
+      <h2>1. Tổng quan kiến trúc</h2>
+      <p>
+        Dự án được tách thành hai backend chính. Folder <code>demo</code> là backend nghiệp vụ
+        thương mại điện tử, chịu trách nhiệm người dùng, sản phẩm, giỏ hàng, đơn hàng, thanh toán,
+        ví, đánh giá, dashboard và quản trị. Folder <code>ai-chatbot-service</code> là service AI
+        độc lập, chuyên xử lý chatbot, tìm kiếm ngữ nghĩa và gợi ý cá nhân hóa.
+      </p>
+
+      <div class="flow">Client / Frontend
+  -> Spring Boot REST API trong demo
+      -> PostgreSQL: dữ liệu nghiệp vụ
+      -> Redis: session/cache/blacklist token
+      -> Flask AI service: chat, search, recommend
+          -> Together AI: LLM + embedding
+          -> PostgreSQL + pgvector: vector search và dữ liệu hành vi</div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Thành phần</th>
+            <th>Vai trò</th>
+            <th>Công nghệ chính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>demo</code></td>
+            <td>Backend nghiệp vụ cốt lõi của website bán đồ thể thao.</td>
+            <td>Java 21, Spring Boot 4.0.3, Spring MVC, Spring Data JPA, Spring Security, JWT, OAuth2, Redis, PostgreSQL.</td>
+          </tr>
+          <tr>
+            <td><code>ai-chatbot-service</code></td>
+            <td>Service AI độc lập cho chatbot, tìm kiếm thông minh và recommendation.</td>
+            <td>Python, Flask 3.1.3, SQLAlchemy, Together AI, LangChain, pgvector, NumPy, Pydantic.</td>
+          </tr>
+          <tr>
+            <td><code>docker-compose.yml</code></td>
+            <td>Chạy hạ tầng gồm PostgreSQL có pgvector, Redis, Spring backend và Flask AI.</td>
+            <td>Docker Compose, image <code>pgvector/pgvector:pg16</code>, Redis 7 Alpine.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Điểm đáng nói khi bảo vệ</h3>
+      <ul>
+        <li>Hệ thống dùng kiến trúc tách service: nghiệp vụ chính tách khỏi AI để dễ phát triển, triển khai và mở rộng riêng.</li>
+        <li>Database PostgreSQL vừa lưu dữ liệu giao dịch, vừa dùng pgvector để lưu embedding phục vụ tìm kiếm ngữ nghĩa.</li>
+        <li>Spring Boot dùng mô hình nhiều lớp: Controller -> Service -> Repository -> Entity/Database.</li>
+        <li>AI service dùng pipeline: phân tích intent -> embedding/vector search -> lexical search -> rerank -> trả sản phẩm/chat.</li>
+      </ul>
+    </section>
+
+    <section id="demo">
+      <h2>2. Folder demo - Spring Boot backend</h2>
+      <p>
+        Folder <code>demo</code> có khoảng 237 file Java, trong đó có 33 model, 26 controller,
+        33 service và 32 repository. Đây là module xử lý nghiệp vụ chính của website.
+      </p>
+
+      <h3>Cấu trúc folder</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Folder</th>
+            <th>Chức năng</th>
+            <th>Ví dụ file</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>controller</code></td>
+            <td>Nhận HTTP request, validate tham số cơ bản, gọi service và trả API response.</td>
+            <td><code>ProductController</code>, <code>OrderController</code>, <code>AiController</code>, <code>CartController</code>.</td>
+          </tr>
+          <tr>
+            <td><code>service</code></td>
+            <td>Chứa nghiệp vụ chính: tạo đơn, tính tiền, lọc sản phẩm, thanh toán, ví, coupon, email, OTP.</td>
+            <td><code>OrderService</code>, <code>CheckoutService</code>, <code>ProductService</code>, <code>AiService</code>.</td>
+          </tr>
+          <tr>
+            <td><code>repository</code></td>
+            <td>Lớp truy cập dữ liệu bằng Spring Data JPA, JPQL/native query, Specification.</td>
+            <td><code>ProductRepository</code>, <code>OrderRepository</code>, <code>ProductSpecification</code>.</td>
+          </tr>
+          <tr>
+            <td><code>model</code></td>
+            <td>Entity ánh xạ bảng database.</td>
+            <td><code>User</code>, <code>Product</code>, <code>ProductSku</code>, <code>Order</code>, <code>Cart</code>.</td>
+          </tr>
+          <tr>
+            <td><code>dto/request</code>, <code>dto/response</code></td>
+            <td>Định nghĩa dữ liệu vào/ra API, tách khỏi entity để bảo mật và dễ kiểm soát response.</td>
+            <td><code>LoginRequest</code>, <code>ProductResponse</code>, <code>OrderResponse</code>, <code>ApiResponse</code>.</td>
+          </tr>
+          <tr>
+            <td><code>mapper</code></td>
+            <td>Chuyển đổi entity sang DTO response.</td>
+            <td><code>ProductMapper</code>, <code>UserMapper</code>, <code>OrderMapper</code>.</td>
+          </tr>
+          <tr>
+            <td><code>auth</code>, <code>config</code></td>
+            <td>Cấu hình JWT, OAuth2, CORS, Redis, Security, VNPAY.</td>
+            <td><code>SecurityConfig</code>, <code>JwtUtils</code>, <code>JwtAuthenticationFilter</code>.</td>
+          </tr>
+          <tr>
+            <td><code>scheduler</code></td>
+            <td>Tác vụ định kỳ, ví dụ xử lý đơn hàng quá hạn.</td>
+            <td><code>OrderScheduler</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Công nghệ trong demo</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Công nghệ</th>
+            <th>Vai trò trong dự án</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Spring Boot 4.0.3 + Java 21</td>
+            <td>Nền tảng backend chính, dựng REST API và quản lý dependency bằng Maven.</td>
+          </tr>
+          <tr>
+            <td>Spring Web MVC</td>
+            <td>Xây dựng controller, endpoint REST: <code>/api/products</code>, <code>/api/orders</code>, <code>/api/auth</code>.</td>
+          </tr>
+          <tr>
+            <td>Spring Data JPA + Hibernate</td>
+            <td>ORM ánh xạ entity với PostgreSQL, hỗ trợ repository, transaction và Specification.</td>
+          </tr>
+          <tr>
+            <td>Spring Security + JWT</td>
+            <td>Xác thực stateless bằng access token/refresh token; phân quyền bằng role.</td>
+          </tr>
+          <tr>
+            <td>OAuth2 Google</td>
+            <td>Cho phép đăng nhập bằng Google qua Spring OAuth2 client.</td>
+          </tr>
+          <tr>
+            <td>Redis + Spring Session</td>
+            <td>Lưu session/cache hoặc dữ liệu phục vụ xác thực như token blacklist.</td>
+          </tr>
+          <tr>
+            <td>PostgreSQL</td>
+            <td>Cơ sở dữ liệu quan hệ chính.</td>
+          </tr>
+          <tr>
+            <td>VNPAY</td>
+            <td>Tích hợp thanh toán trực tuyến qua return URL và IPN callback.</td>
+          </tr>
+          <tr>
+            <td>Spring Mail</td>
+            <td>Gửi email, OTP, quên mật khẩu.</td>
+          </tr>
+          <tr>
+            <td>Lombok</td>
+            <td>Giảm boilerplate bằng annotation như <code>@Getter</code>, <code>@Setter</code>, <code>@Builder</code>, <code>@RequiredArgsConstructor</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Mô hình nhiều lớp</h3>
+      <div class="flow">Request từ frontend
+  -> Controller: nhận request, lấy user hiện tại, trả ApiResponse
+  -> Service: xử lý nghiệp vụ, transaction, validate logic
+  -> Repository: query database bằng JPA/JPQL/native SQL
+  -> Entity: ánh xạ bảng PostgreSQL
+  -> Mapper/DTO: đóng gói dữ liệu trả về client</div>
+
+      <p>
+        Ví dụ với đặt hàng: <code>OrderController</code> nhận request, gọi
+        <code>OrderService.placeOrder</code>. Service lấy cart, kiểm tra tồn kho,
+        tính subtotal, phí ship, coupon, tạo order, trừ kho bằng query atomic,
+        tạo payment, xử lý VNPAY hoặc ví, rồi trả <code>OrderResponse</code>.
+      </p>
+    </section>
+
+    <section id="demo-model">
+      <h2>3. Mô hình dữ liệu trong demo</h2>
+      <p>
+        Dữ liệu được thiết kế xoay quanh các nhóm chính: người dùng, catalog sản phẩm,
+        giỏ hàng, đơn hàng, thanh toán, ví, tương tác người dùng và chatbot.
+      </p>
+
+      <h3>Nhóm người dùng và bảo mật</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Entity</th>
+            <th>Ý nghĩa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>User</code></td>
+            <td>Tài khoản khách hàng/admin/staff, triển khai <code>UserDetails</code> để tích hợp Spring Security.</td>
+          </tr>
+          <tr>
+            <td><code>Role</code>, <code>UserRole</code></td>
+            <td>Quản lý vai trò và phân quyền, role được đưa vào JWT claims.</td>
+          </tr>
+          <tr>
+            <td><code>UserAddress</code></td>
+            <td>Địa chỉ nhận hàng, có cơ chế default address.</td>
+          </tr>
+          <tr>
+            <td><code>Wallet</code>, <code>WalletTransaction</code></td>
+            <td>Ví điện tử nội bộ và lịch sử giao dịch nạp/rút/thanh toán/hoàn tiền.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Nhóm catalog sản phẩm</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Entity</th>
+            <th>Quan hệ/ý nghĩa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Category</code></td>
+            <td>Danh mục cha-con, hỗ trợ lọc theo cây danh mục bằng đệ quy.</td>
+          </tr>
+          <tr>
+            <td><code>Brand</code></td>
+            <td>Thương hiệu sản phẩm.</td>
+          </tr>
+          <tr>
+            <td><code>Attribute</code>, <code>AttributeValue</code></td>
+            <td>Thuộc tính động như màu sắc, size, chất liệu; mỗi thuộc tính có nhiều giá trị.</td>
+          </tr>
+          <tr>
+            <td><code>CategoryAttribute</code></td>
+            <td>Ràng buộc thuộc tính nào được phép dùng cho danh mục nào.</td>
+          </tr>
+          <tr>
+            <td><code>Product</code></td>
+            <td>Sản phẩm cha, chứa tên, slug, mô tả, giá cơ bản, brand, category, trạng thái active.</td>
+          </tr>
+          <tr>
+            <td><code>ProductSku</code></td>
+            <td>Biến thể sản phẩm có mã SKU, giá, tồn kho, trạng thái; dùng khi đặt hàng.</td>
+          </tr>
+          <tr>
+            <td><code>SkuValue</code></td>
+            <td>Bảng nối giữa SKU và AttributeValue, ví dụ SKU A có size L và màu đỏ.</td>
+          </tr>
+          <tr>
+            <td><code>ProductImage</code>, <code>ProductSkuImage</code></td>
+            <td>Ảnh sản phẩm chung và ảnh riêng cho từng biến thể SKU.</td>
+          </tr>
+          <tr>
+            <td><code>ProductSpec</code></td>
+            <td>Thông số kỹ thuật chung của sản phẩm.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Nhóm giỏ hàng, đơn hàng và thanh toán</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Entity</th>
+            <th>Ý nghĩa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Cart</code>, <code>CartItem</code></td>
+            <td>Giỏ hàng và các SKU được thêm vào giỏ.</td>
+          </tr>
+          <tr>
+            <td><code>Order</code>, <code>OrderItem</code></td>
+            <td>Đơn hàng và các dòng hàng; có trạng thái đơn và trạng thái thanh toán.</td>
+          </tr>
+          <tr>
+            <td><code>OrderStatusHistory</code></td>
+            <td>Lịch sử thay đổi trạng thái đơn: PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED, RETURNED.</td>
+          </tr>
+          <tr>
+            <td><code>Payment</code>, <code>PaymentMethod</code></td>
+            <td>Bản ghi thanh toán, provider code, transaction id, phương thức CASH/VNPAY/WALLET.</td>
+          </tr>
+          <tr>
+            <td><code>Coupon</code></td>
+            <td>Mã giảm giá, gồm giảm tiền/phần trăm/free shipping, giới hạn lượt dùng.</td>
+          </tr>
+          <tr>
+            <td><code>ShippingMethod</code></td>
+            <td>Phương thức giao hàng và phí vận chuyển.</td>
+          </tr>
+          <tr>
+            <td><code>OrderReturn</code></td>
+            <td>Yêu cầu đổi/trả hàng, có trạng thái PENDING/APPROVED/REJECTED.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Nhóm trải nghiệm và AI</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Entity</th>
+            <th>Ý nghĩa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Review</code></td>
+            <td>Đánh giá sản phẩm, có duyệt trước khi hiển thị và tính điểm trung bình.</td>
+          </tr>
+          <tr>
+            <td><code>Wishlist</code></td>
+            <td>Danh sách yêu thích, đồng thời là tín hiệu cho recommendation.</td>
+          </tr>
+          <tr>
+            <td><code>UserInteraction</code></td>
+            <td>Lưu hành vi VIEW, SEARCH, ADD_TO_CART, PURCHASE để phân tích sở thích.</td>
+          </tr>
+          <tr>
+            <td><code>ChatbotSession</code>, <code>ChatbotMessage</code></td>
+            <td>Lưu phiên chat, tin nhắn user/bot, danh sách product id đã truy xuất.</td>
+          </tr>
+          <tr>
+            <td><code>Banner</code></td>
+            <td>Quản lý banner hiển thị frontend.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>ERD mức khái niệm</h3>
+      <div class="flow">User 1-n Cart, Order, Review, Wishlist, UserAddress, UserInteraction, ChatbotSession
+Product n-1 Category
+Product n-1 Brand
+Product 1-n ProductSku
+ProductSku n-n AttributeValue thông qua SkuValue
+Category n-n Attribute thông qua CategoryAttribute
+Cart 1-n CartItem -> ProductSku
+Order 1-n OrderItem -> ProductSku
+Order 1-1 Payment
+Order 1-n OrderStatusHistory
+ChatbotSession 1-n ChatbotMessage</div>
+    </section>
+
+    <section id="demo-algorithms">
+      <h2>4. Thuật toán và nghiệp vụ trong demo</h2>
+
+      <h3>4.1 Xác thực và phân quyền</h3>
+      <p>
+        <code>SecurityConfig</code> cấu hình hệ thống stateless, tắt CSRF cho REST API,
+        dùng <code>JwtAuthenticationFilter</code> trước <code>UsernamePasswordAuthenticationFilter</code>.
+        Một số endpoint public như đăng nhập, danh mục, thương hiệu, sản phẩm GET, VNPAY callback.
+        Các endpoint còn lại yêu cầu authenticated hoặc <code>@PreAuthorize</code>.
+      </p>
+
+      <div class="flow">Login thành công
+  -> JwtUtils.generateAccessToken(user)
+  -> roles được đưa vào claims
+  -> client gửi Authorization: Bearer token
+  -> JwtAuthenticationFilter kiểm tra chữ ký, hạn dùng, user, blacklist Redis nếu có
+  -> SecurityContext có Authentication
+  -> Controller/Service lấy user hiện tại để xử lý</div>
+
+      <h3>4.2 Lọc sản phẩm động bằng Specification</h3>
+      <p>
+        <code>ProductService.filterProducts</code> dùng <code>ProductSpecification</code> để ghép điều kiện động:
+        active, category, brand, khoảng giá, attribute values và sort. Với category, service thu thập cả
+        danh mục con bằng đệ quy <code>collectAllCategoryIds</code>. Với thuộc tính, các value được gom theo
+        attribute group.
+      </p>
+      <div class="formula">Logic lọc thuộc tính:
+Trong cùng một nhóm attribute: OR
+Giữa các nhóm attribute khác nhau: AND
+
+Ví dụ:
+(màu = đỏ OR màu = xanh) AND (size = L OR size = XL)</div>
+
+      <h3>4.3 Tạo sản phẩm có SKU và thuộc tính động</h3>
+      <p>
+        Khi tạo sản phẩm, service kiểm tra category/brand tồn tại, slug không trùng, attribute value không trùng,
+        và attribute phải được phép dùng cho category đó. Ảnh sản phẩm được lưu theo thứ tự, ảnh đầu là thumbnail.
+        SKU có mã riêng, giá riêng, tồn kho riêng và danh sách attribute value riêng.
+      </p>
+
+      <h3>4.4 Checkout preview</h3>
+      <p>
+        <code>CheckoutService.preview</code> không tạo đơn mà chỉ mô phỏng tổng tiền trước khi đặt hàng.
+        Công thức tính:
+      </p>
+      <div class="formula">subtotal = SUM(sku.price * quantity)
+shippingFee = shipping_method.cost
+discount = coupon discount hoặc shippingFee nếu coupon FREE_SHIPPING
+total = MAX(subtotal + shippingFee - discount, 0)</div>
+
+      <h3>4.5 Đặt hàng và xử lý tồn kho</h3>
+      <p>
+        <code>OrderService.placeOrder</code> chạy trong transaction. Điểm quan trọng là trừ kho bằng câu update có điều kiện:
+        chỉ trừ khi <code>stockQuantity >= qty</code>. Nếu số dòng update bằng 0 thì báo thiếu hàng và transaction rollback.
+        Đây là cách tránh oversell tốt hơn so với chỉ check tồn kho trong RAM.
+      </p>
+
+      <div class="flow">Đặt hàng:
+1. Lấy cart và item được chọn
+2. Validate stock
+3. Tính subtotal, ship, coupon, total
+4. Tạo Order PENDING + Payment UNPAID
+5. Với từng item: atomic decrement stock
+6. Lưu OrderItem
+7. Nếu CASH: xóa item khỏi cart
+8. Nếu VNPAY: tạo paymentUrl, chờ callback
+9. Nếu WALLET: trừ ví, đánh dấu PAID, lưu lịch sử</div>
+
+      <h3>4.6 VNPAY và idempotency</h3>
+      <p>
+        Thanh toán VNPAY có hai endpoint callback: return URL và IPN. Service kiểm tra
+        <code>transactionId</code>, trạng thái đã PAID hoặc đơn đã CANCELLED để tránh xử lý trùng khi VNPAY gọi lại nhiều lần.
+        Đây là tính idempotent: cùng một callback gọi lại không làm sai dữ liệu.
+      </p>
+
+      <h3>4.7 Dashboard</h3>
+      <p>
+        <code>DashboardService</code> dùng repository projection để lấy thống kê:
+        tổng user active, tổng đơn hợp lệ, tổng doanh thu đã thanh toán, đơn pending,
+        biểu đồ doanh thu theo ngày, top sản phẩm bán chạy và doanh thu theo danh mục.
+      </p>
+
+      <h3>4.8 Tích hợp AI từ Spring Boot</h3>
+      <p>
+        <code>AiController</code> expose endpoint <code>/api/ai/chat</code> và <code>/api/ai/recommend</code>.
+        <code>AiService</code> gọi sang Flask bằng <code>RestTemplate</code>, nhận danh sách product id,
+        sau đó fetch lại sản phẩm trong database Spring để trả về <code>ProductResponse</code> đầy đủ và chỉ giữ SKU còn hàng.
+      </p>
+    </section>
+
+    <section id="ai">
+      <h2>5. Folder ai-chatbot-service</h2>
+      <p>
+        Folder <code>ai-chatbot-service</code> là một Flask service độc lập. Service này không dùng ORM model đầy đủ,
+        mà chủ yếu dùng SQLAlchemy engine/session và raw SQL để truy vấn trực tiếp PostgreSQL. Trong <code>app</code>
+        có 15 file Python.
+      </p>
+
+      <h3>Cấu trúc folder</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>File/folder</th>
+            <th>Chức năng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>run.py</code></td>
+            <td>Entry point chạy Flask server.</td>
+          </tr>
+          <tr>
+            <td><code>app/__init__.py</code></td>
+            <td>Flask app factory, bật CORS, register blueprint <code>/api/ai</code>, khởi chạy auto-sync vector.</td>
+          </tr>
+          <tr>
+            <td><code>controllers/ai_controller.py</code></td>
+            <td>Định nghĩa API: health, search, chat, recommend, ask SSE.</td>
+          </tr>
+          <tr>
+            <td><code>services/agent_service.py</code></td>
+            <td>LLM orchestrator chọn tool search/chat/recommend và stream kết quả.</td>
+          </tr>
+          <tr>
+            <td><code>services/rag_service.py</code></td>
+            <td>Hybrid RAG: intent analysis, vector search, lexical search, reranking, personalization.</td>
+          </tr>
+          <tr>
+            <td><code>services/intent_service.py</code></td>
+            <td>Trích xuất ý định mua hàng bằng LLM, fallback regex khi lỗi API.</td>
+          </tr>
+          <tr>
+            <td><code>services/embedding_service.py</code></td>
+            <td>Gọi model embedding, chunk text dài, batch embedding, average vector.</td>
+          </tr>
+          <tr>
+            <td><code>services/chatbot_service.py</code></td>
+            <td>Chatbot RAG multi-turn, lưu session/message, dùng LangChain gọi LLM.</td>
+          </tr>
+          <tr>
+            <td><code>services/recommendation_service.py</code></td>
+            <td>Gợi ý cá nhân hóa dựa trên vector centroid, hành vi, review, body profile, popularity.</td>
+          </tr>
+          <tr>
+            <td><code>services/sync_service.py</code></td>
+            <td>Tự đồng bộ/vector hóa sản phẩm mới hoặc cập nhật.</td>
+          </tr>
+          <tr>
+            <td><code>seed_data.py</code></td>
+            <td>Script tạo embedding ban đầu cho sản phẩm.</td>
+          </tr>
+          <tr>
+            <td><code>test_ask.html</code></td>
+            <td>Giao diện test endpoint SSE <code>/api/ai/ask</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>API của AI service</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Endpoint</th>
+            <th>Input chính</th>
+            <th>Output chính</th>
+            <th>Vai trò</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /api/ai/health</code></td>
+            <td>-</td>
+            <td>Trạng thái service</td>
+            <td>Kiểm tra Flask đang chạy.</td>
+          </tr>
+          <tr>
+            <td><code>POST /api/ai/search</code></td>
+            <td><code>query</code>, <code>category_id</code>, <code>top_k</code></td>
+            <td><code>product_ids</code></td>
+            <td>Tìm kiếm sản phẩm bằng Hybrid RAG.</td>
+          </tr>
+          <tr>
+            <td><code>POST /api/ai/chat</code></td>
+            <td><code>message</code>, <code>session_id</code>, <code>user_id</code></td>
+            <td><code>reply</code>, <code>suggested_product_ids</code></td>
+            <td>Chatbot tư vấn đa lượt.</td>
+          </tr>
+          <tr>
+            <td><code>POST /api/ai/recommend</code></td>
+            <td><code>user_id</code>, <code>limit</code></td>
+            <td><code>product_ids</code></td>
+            <td>Gợi ý sản phẩm cá nhân hóa.</td>
+          </tr>
+          <tr>
+            <td><code>POST /api/ai/ask</code></td>
+            <td><code>message</code>, <code>user_id</code>, <code>session_id</code></td>
+            <td>SSE event <code>chunk</code>, <code>done</code>, <code>error</code></td>
+            <td>Endpoint hợp nhất, LLM tự chọn tool và stream câu trả lời.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Công nghệ trong AI service</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Công nghệ/model</th>
+            <th>Vai trò</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Flask 3.1.3 + Flask-CORS</td>
+            <td>Xây dựng REST API và cho phép frontend/Spring gọi cross-origin.</td>
+          </tr>
+          <tr>
+            <td>Together AI</td>
+            <td>Nền tảng gọi LLM và embedding model.</td>
+          </tr>
+          <tr>
+            <td><code>meta-llama/Llama-3.3-70B-Instruct-Turbo</code></td>
+            <td>LLM chính cho intent extraction, router và sinh câu trả lời chatbot.</td>
+          </tr>
+          <tr>
+            <td><code>intfloat/multilingual-e5-large-instruct</code></td>
+            <td>Embedding model đa ngôn ngữ, phù hợp tiếng Việt; vector 1024 chiều.</td>
+          </tr>
+          <tr>
+            <td>pgvector</td>
+            <td>Lưu và truy vấn vector bằng toán tử cosine distance <code>&lt;=&gt;</code>.</td>
+          </tr>
+          <tr>
+            <td>LangChain</td>
+            <td>Đóng gói message history và gọi LLM trong chatbot multi-turn.</td>
+          </tr>
+          <tr>
+            <td>Pydantic</td>
+            <td>Định nghĩa schema intent như budget, brand, color, sport type, excluded keywords.</td>
+          </tr>
+          <tr>
+            <td>NumPy</td>
+            <td>Tính vector centroid cho recommendation.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="ai-algorithms">
+      <h2>6. Thuật toán AI, RAG, recommendation</h2>
+
+      <h3>6.1 LLM router trong agent_service</h3>
+      <p>
+        <code>agent_service.py</code> dùng LLM như một orchestrator. LLM đọc câu hỏi người dùng,
+        sau đó trả JSON để chọn một trong ba tool: <code>search_products</code>, <code>chat_with_bot</code>,
+        hoặc <code>get_recommendations</code>. Temperature bằng 0.0 để output ổn định.
+      </p>
+      <div class="flow">User message
+  -> LLM router
+  -> JSON: {"tool": "...", "arguments": {...}}
+  -> Python executor gọi đúng service
+  -> Lấy product context từ DB
+  -> LLM sinh câu trả lời
+  -> Stream về client bằng SSE</div>
+
+      <h3>6.2 Intent extraction trong intent_service</h3>
+      <p>
+        Service trích xuất các slot quan trọng của nhu cầu mua hàng:
+        từ khóa tìm kiếm, ngân sách tối đa, danh mục, brand, môn thể thao, giới tính, màu mong muốn,
+        phân khúc giá và từ khóa loại trừ.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Slot</th>
+            <th>Ví dụ</th>
+            <th>Cách dùng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>search_keywords</code></td>
+            <td>"giày Nike chạy bộ nam"</td>
+            <td>Tạo enhanced query để embedding và lexical search.</td>
+          </tr>
+          <tr>
+            <td><code>max_budget</code></td>
+            <td>1000000</td>
+            <td>Lọc SQL với dung sai ngân sách 15%.</td>
+          </tr>
+          <tr>
+            <td><code>category_id</code></td>
+            <td>1 = giày, 2 = quần áo, 3 = phụ kiện</td>
+            <td>Lọc cứng theo danh mục nếu đủ tin cậy.</td>
+          </tr>
+          <tr>
+            <td><code>brand_name</code></td>
+            <td>Nike, Adidas, Puma</td>
+            <td>Lọc brand, có alias tiếng lóng như "nai", "das", "ua".</td>
+          </tr>
+          <tr>
+            <td><code>excluded_keywords</code></td>
+            <td>["đen", "xám"]</td>
+            <td>Loại bỏ sản phẩm chứa từ khách không muốn.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Khi LLM lỗi, hệ thống fallback regex: bắt giá theo "triệu", "củ", "k",
+        nhận diện màu phủ định, brand alias, category và sport type. Điều này giúp service không chết khi API AI gặp lỗi.
+      </p>
+
+      <h3>6.3 Embedding và chunking</h3>
+      <p>
+        <code>embedding_service.py</code> dùng model <code>multilingual-e5-large-instruct</code>.
+        Text dài được cắt thành chunk dưới giới hạn token, có overlap 40 token để giữ ngữ cảnh.
+        Nếu một sản phẩm có nhiều chunk, vector cuối được tính bằng trung bình có trọng số token và normalize.
+      </p>
+      <div class="formula">Embedding text dài:
+1. Clean text
+2. Split thành chunks theo câu hoặc token window
+3. Embed từng chunk
+4. Weighted average theo số token
+5. Normalize vector</div>
+
+      <h3>6.4 Hybrid RAG search trong rag_service</h3>
+      <p>
+        Tìm kiếm không chỉ dùng vector thuần. Pipeline kết hợp LLM intent, vector search, lexical search,
+        broad fallback và reranking. Đây là điểm mạnh vì truy vấn tiếng Việt ngắn/dài, có giá, màu, brand,
+        phủ định đều được xử lý.
+      </p>
+
+      <div class="flow">Giai đoạn 0: analyze_query(query)
+  -> Lấy intent: keywords, budget, brand, category, color, excluded
+
+Giai đoạn 1: candidate retrieval
+  -> Enhanced query -> embedding -> pgvector cosine search
+  -> Lexical search bằng LIKE và score theo tên/thuộc tính/danh mục/mô tả
+  -> Merge candidate, loại trùng
+  -> Nếu không có, broad fallback theo dữ liệu mới/còn hàng
+
+Giai đoạn 2: rerank
+  -> Tính vector_score, lexical_score, keyword_score, personalization
+  -> Boost màu, profile/body fit, review
+  -> Trừ penalty từ hủy/trả/đánh giá xấu
+  -> Sort final_score giảm dần</div>
+
+      <div class="formula">Rerank search:
+vector_score = max(0, 1 - cosine_distance / 2)
+lexical_score = lexical_score_raw / max_lexical
+keyword_score = matched_keywords / total_keywords
+
+final_score =
+  0.42 * vector_score
++ 0.28 * lexical_score
++ 0.15 * keyword_score
++ 0.15 * personalization
++ boost</div>
+
+      <h3>6.5 RAG chatbot multi-turn</h3>
+      <p>
+        <code>chatbot_service.py</code> lưu session và message vào database.
+        Mỗi lượt chat, service truy xuất sản phẩm liên quan bằng RAG, lấy thêm personalization context nếu có user,
+        load 6 tin nhắn gần nhất, rồi gọi LLM để sinh câu trả lời.
+      </p>
+      <div class="flow">Chat flow:
+1. Tạo hoặc kiểm tra session
+2. Lưu tin nhắn USER
+3. search_similar_products(message, top_k=4)
+4. Nếu câu hỏi về body/sở thích: merge thêm recommendation
+5. Lấy thông tin sản phẩm còn hàng
+6. Build prompt: system + sản phẩm + cá nhân hóa + history
+7. LLM sinh reply tối đa 3-4 câu
+8. Lưu tin nhắn BOT và retrieved_product_ids</div>
+
+      <h3>6.6 Recommendation engine</h3>
+      <p>
+        <code>recommendation_service.py</code> dùng hướng content-based + behavior-based + popularity fusion.
+        Hệ thống lấy seed từ nhiều nguồn: đơn hàng, wishlist, cart, user interaction, review, lịch sử trạng thái đơn,
+        yêu cầu trả hàng, sản phẩm từng xuất hiện trong chatbot. Mỗi tín hiệu có trọng số và time decay.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nguồn tín hiệu</th>
+            <th>Trọng số/ý nghĩa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Đơn đã giao/thành công</td>
+            <td>Tín hiệu mạnh nhất, thể hiện sở thích thật.</td>
+          </tr>
+          <tr>
+            <td>Thêm giỏ hàng</td>
+            <td>Tín hiệu quan tâm cao.</td>
+          </tr>
+          <tr>
+            <td>Wishlist</td>
+            <td>Tín hiệu yêu thích, chưa mua.</td>
+          </tr>
+          <tr>
+            <td>View/Search</td>
+            <td>Tín hiệu nhẹ, giúp hiểu hành vi duyệt sản phẩm.</td>
+          </tr>
+          <tr>
+            <td>Review tốt/xấu</td>
+            <td>Review tốt tăng điểm; review xấu hoặc trả hàng/hủy đơn tạo penalty.</td>
+          </tr>
+          <tr>
+            <td>Chiều cao/cân nặng</td>
+            <td>Tính BMI/ước lượng size, boost sản phẩm quần áo phù hợp.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="formula">Time decay:
+signal = base_weight * exp(-age_seconds / (86400 * 45))
+
+Ý nghĩa: hành vi càng mới càng có trọng số cao; sau khoảng 45 ngày tín hiệu giảm đáng kể.</div>
+
+      <div class="formula">Weighted centroid:
+centroid = mean(seed_embedding_i * normalized_weight_i)
+
+Sau đó dùng pgvector tìm sản phẩm gần centroid nhất,
+loại sản phẩm đã mua thành công và chỉ lấy sản phẩm active/còn hàng.</div>
+
+      <div class="formula">Rerank recommendation khi brand đáng tin cậy:
+final_score =
+  0.32 * vector_score
++ 0.20 * behavior_score
++ 0.08 * behavior_candidate_score
++ 0.14 * review_score
++ 0.10 * recency_score
++ 0.04 * popularity_score
++ 0.12 * body_fit_score
+- penalty</div>
+
+      <h3>6.7 Cold start</h3>
+      <p>
+        Nếu user chưa có hành vi hoặc seed không có embedding, recommendation fallback sang sản phẩm phổ biến,
+        còn hàng, active và phù hợp profile nếu có. Đây là cách xử lý bài toán cold start.
+      </p>
+    </section>
+
+    <section id="integration">
+      <h2>7. Luồng tích hợp giữa hai service</h2>
+      <h3>Spring gọi Flask</h3>
+      <p>
+        Frontend có thể gọi Spring Boot <code>/api/ai/chat</code> hoặc <code>/api/ai/recommend</code>.
+        Spring sẽ lấy user hiện tại bằng JWT, gọi Flask AI service, nhận danh sách product id,
+        rồi tự fetch sản phẩm bằng repository của Spring. Cách này giúp response cuối cùng thống nhất với DTO của hệ thống chính.
+      </p>
+
+      <div class="flow">Frontend -> Spring /api/ai/chat
+Spring AiController:
+  request.setUserId(currentUserId)
+  -> AiService.processChat
+  -> POST Flask /api/ai/chat
+Flask:
+  -> RAG + LLM + DB
+  -> trả reply + product_ids
+Spring:
+  -> fetch ProductResponse theo product_ids
+  -> lọc SKU active và còn hàng
+  -> trả ApiResponse cho frontend</div>
+
+      <h3>Dữ liệu dùng chung</h3>
+      <ul>
+        <li>Cả hai service dùng cùng PostgreSQL database <code>datn</code>.</li>
+        <li>Spring quản lý dữ liệu nghiệp vụ: users, products, orders, carts, reviews.</li>
+        <li>Flask đọc các bảng đó để tạo context và gợi ý; đồng thời đọc/ghi bảng chatbot và embedding.</li>
+        <li>pgvector nằm trong PostgreSQL nên không cần vector database riêng.</li>
+      </ul>
+
+      <h3>Lợi ích kiến trúc tách service</h3>
+      <div class="grid">
+        <div class="box">
+          <h4>Dễ mở rộng</h4>
+          <p>Có thể scale AI service riêng vì việc gọi LLM/embedding nặng hơn nghiệp vụ CRUD thông thường.</p>
+        </div>
+        <div class="box">
+          <h4>Dễ thay model</h4>
+          <p>Có thể đổi model embedding hoặc LLM trong Flask mà không ảnh hưởng lớn đến Spring Boot.</p>
+        </div>
+        <div class="box">
+          <h4>Tách trách nhiệm</h4>
+          <p>Spring giữ vai trò nguồn dữ liệu và luật nghiệp vụ; Flask tập trung vào xử lý AI.</p>
+        </div>
+        <div class="box">
+          <h4>Khả năng fallback</h4>
+          <p>Nếu AI lỗi, Spring vẫn có thể trả lỗi thân thiện hoặc giữ các chức năng bán hàng cốt lõi hoạt động.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="defense">
+      <h2>8. Gợi ý trả lời bảo vệ</h2>
+
+      <div class="question">
+        <h4>1. Vì sao dùng Spring Boot cho backend chính?</h4>
+        <p>
+          Vì Spring Boot phù hợp xây dựng REST API lớn, có sẵn Spring Security, Data JPA, transaction,
+          validation, mail, OAuth2. Dự án có nhiều nghiệp vụ thương mại điện tử cần transaction chặt chẽ,
+          nên Java/Spring giúp code rõ lớp và an toàn dữ liệu.
+        </p>
+      </div>
+
+      <div class="question">
+        <h4>2. Vì sao tách AI thành Flask service?</h4>
+        <p>
+          AI có dependency Python, model embedding, LangChain và thư viện ML riêng. Tách thành service riêng giúp
+          thay model, scale và debug AI độc lập, trong khi Spring Boot vẫn giữ nghiệp vụ chính ổn định.
+        </p>
+      </div>
+
+      <div class="question">
+        <h4>3. RAG trong dự án hoạt động thế nào?</h4>
+        <p>
+          RAG là Retrieval-Augmented Generation. Đầu tiên hệ thống phân tích intent từ câu hỏi,
+          tạo embedding và tìm sản phẩm liên quan bằng pgvector, kết hợp lexical search để tránh miss keyword,
+          sau đó rerank ứng viên và đưa thông tin sản phẩm còn hàng vào prompt để LLM trả lời.
+        </p>
+      </div>
+
+      <div class="question">
+        <h4>4. Vì sao không chỉ dùng LIKE search?</h4>
+        <p>
+          LIKE search chỉ khớp từ khóa trực tiếp, khó hiểu các câu tự nhiên như "giày nhẹ để chạy dưới 1 triệu".
+          Vector search hiểu ngữ nghĩa tốt hơn. Tuy nhiên vector search có thể bỏ sót từ khóa chính xác,
+          nên dự án kết hợp cả vector và lexical search.
+        </p>
+      </div>
+
+      <div class="question">
+        <h4>5. Recommendation cá nhân hóa dựa trên gì?</h4>
+        <p>
+          Dựa trên nhiều tín hiệu: mua hàng, giỏ hàng, wishlist, view/search, review, lịch sử chat,
+          trả/hủy hàng và thông tin chiều cao/cân nặng. Các sản phẩm seed được lấy embedding,
+          tính centroid có trọng số, tìm sản phẩm tương tự rồi rerank bằng review, độ mới, popularity và body fit.
+        </p>
+      </div>
+
+      <div class="question">
+        <h4>6. Dự án xử lý thiếu hàng khi nhiều người cùng đặt như thế nào?</h4>
+        <p>
+          Khi đặt hàng, service không chỉ check tồn kho trước mà còn trừ kho bằng update có điều kiện
+          <code>stockQuantity >= qty</code>. Nếu update không ảnh hưởng dòng nào thì báo thiếu hàng và rollback transaction.
+          Cách này giảm rủi ro bán vượt tồn kho.
+        </p>
+      </div>
+
+      <div class="question">
+        <h4>7. Vì sao cần DTO và mapper?</h4>
+        <p>
+          DTO giúp tách dữ liệu API khỏi entity database, tránh lộ dữ liệu nhạy cảm và tránh vòng lặp quan hệ khi serialize.
+          Mapper giúp chuẩn hóa cách chuyển đổi entity sang response.
+        </p>
+      </div>
+
+      <div class="question">
+        <h4>8. Điểm mạnh kỹ thuật của dự án là gì?</h4>
+        <p>
+          Điểm mạnh là kết hợp được backend thương mại điện tử đầy đủ với AI thực tế:
+          JWT/OAuth2, transaction đơn hàng, VNPAY, ví, dashboard, SKU/attribute động,
+          chatbot RAG, vector search và recommendation cá nhân hóa.
+        </p>
+      </div>
+
+      <h3>Checklist kiến thức nên nắm</h3>
+      <ul>
+        <li>Giải thích được mô hình Controller -> Service -> Repository -> Entity.</li>
+        <li>Giải thích được Product, SKU, AttributeValue khác nhau thế nào.</li>
+        <li>Giải thích được flow đặt hàng, tính tiền, coupon, trừ kho và thanh toán.</li>
+        <li>Giải thích được JWT access token, refresh token và role claims.</li>
+        <li>Giải thích được RAG: intent -> embedding -> vector search -> rerank -> LLM.</li>
+        <li>Giải thích được pgvector và cosine distance <code>&lt;=&gt;</code>.</li>
+        <li>Giải thích được weighted centroid và time decay trong recommendation.</li>
+        <li>Biết nêu ưu/nhược điểm: AI phụ thuộc API ngoài, reranker còn heuristic, cần caching và monitoring nếu triển khai thật.</li>
+      </ul>
+
+      <h3>Hạn chế và hướng phát triển</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Hạn chế hiện tại</th>
+            <th>Hướng cải tiến</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI phụ thuộc Together API và network.</td>
+            <td>Thêm cache embedding/query, retry, circuit breaker, fallback nội bộ.</td>
+          </tr>
+          <tr>
+            <td>Rerank chủ yếu là heuristic.</td>
+            <td>Có thể dùng cross-encoder reranker hoặc học trọng số từ log người dùng.</td>
+          </tr>
+          <tr>
+            <td>Chat history lấy số tin nhắn cố định.</td>
+            <td>Dùng summary memory hoặc sliding window theo token.</td>
+          </tr>
+          <tr>
+            <td>Spring gọi Flask bằng <code>RestTemplate</code>.</td>
+            <td>Có thể đổi sang WebClient để hỗ trợ reactive/streaming tốt hơn.</td>
+          </tr>
+          <tr>
+            <td>Chưa thấy test bao phủ nghiệp vụ lớn.</td>
+            <td>Bổ sung unit test cho coupon, order, stock, recommendation và integration test API.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>
